@@ -1,7 +1,7 @@
 apiVersion: v1
 kind: PersistentVolumeClaim
 metadata:
-  name: mysql-volume
+  name: mydb
 spec:
   accessModes:
     - ReadWriteOnce
@@ -14,53 +14,53 @@ spec:
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: mysql
+  name: glpidb
 spec:
   selector:
     matchLabels:
-      app: mysql
+      app: glpidb
   template:
     metadata:
       labels:
-        app: mysql
+        app: glpidb
     spec:
       containers:
-      - image: eveigadev/k8s-database:latest
+      - image: eveigadev/k8s-glpidb:latest
         args:
         - "--ignore-db-dir=lost+found"
-        name: mysql
+        name: glpidb
         ports:
         - containerPort: 3306
-          name: mysql
+          name: glpidb
 
         volumeMounts:
-        - name: mysql-volume
+        - name: mydb
           mountPath: /var/lib/mysql/
       volumes:
-      - name: mysql-volume
+      - name: mydb
         persistentVolumeClaim:
-          claimName: mysql-volume
+          claimName: mydb
 
 ---
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: backend
+  name: glpi
   labels:
-    app: backend
+    app: glpi
 spec:
-  replicas: 6
+  replicas: 1
   selector:
     matchLabels:
-      app: backend
+      app: glpi
   template:
     metadata:
       labels:
-        app: backend
+        app: glpi
     spec:
       containers:
-      - name: backend
-        image: eveigadev/k8s-backend:latest
+      - name: glpi
+        image: eveigadev/k8s-glpi:latest
         #imagePullPolicy: Always
         ports:
         - containerPort: 80

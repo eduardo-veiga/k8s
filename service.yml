@@ -1,10 +1,10 @@
 apiVersion: v1
 kind: Service
 metadata:
-  name: backend
+  name: glpi
 spec:
   selector:
-    app: backend
+    app: glpi
   ports:
   - port: 80
     targetPort: 80
@@ -14,10 +14,10 @@ spec:
 apiVersion: v1
 kind: Service
 metadata:
-  name: mysql-con
+  name: glpidb
 spec:
   ports:
   - port: 3306
   selector:
-    app: mysql
+    app: glpidb
 
