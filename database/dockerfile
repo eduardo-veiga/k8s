@@ -1,13 +1,11 @@
-FROM mariadb:10.7
+FROM mysql:5.7
 
 WORKDIR /var/lib/mysql/
 
-ENV MARIADB_ROOT_PASSWORD=glpi
+ENV MYSQL_ROOT_PASSWORD=Senha123
 
-ENV MARIADB_DATABASE=glpidb
+ENV MYSQL_DATABASE=meubanco
 
-ENV MARIADB_USER=glpi_user
-
-ENV MARIADB_PASSWORD=glpi
+ADD sql.sql /docker-entrypoint-initdb.d
 
 EXPOSE 3306

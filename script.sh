@@ -2,13 +2,13 @@
 
 echo "fazendo build das imagens"
 
-sudo docker build -t eveigadev/k8s-glpi backend/.
-sudo docker build -t eveigadev/k8s-glpidb database/.
+sudo docker build -t eveigadev/k8s-backend backend/.
+sudo docker build -t eveigadev/k8s-database database/.
 
 echo "enviando imagens criadas para o docker hub"
 
-sudo docker push eveigadev/k8s-glpi
-sudo docker push eveigadev/k8s-glpidb
+sudo docker push eveigadev/k8s-backend
+sudo docker push eveigadev/k8s-database
 
 echo "subindo os servicos"
 
